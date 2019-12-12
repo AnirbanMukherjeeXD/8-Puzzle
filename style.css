@@ -1,0 +1,33 @@
+body {
+	background: #b9b3b3;
+}
+
+#grid {
+	height:320px;
+	width:320px;
+	padding:10px;
+	border: 4px solid black;
+	background: black;
+}
+
+#blank {
+	/*background: red;*/
+	transition: 0.3s ease;
+	float:left;
+	height:84px;
+	width:84px;
+	margin:10px;
+}
+
+.tile {
+	background: #91eabd;
+	position: relative;
+	transition: 0.3s ease;
+	float:left;
+	height:30px;
+	width:30px;
+	margin:10px;
+	font-size: 30px;
+	font-family: verdana;
+	padding:28px;
+}
