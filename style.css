@@ -10,12 +10,12 @@ body {
 	background: black;
 }
 
-#blank {
-	/*background: red;*/
+.blank {
+	background: none !important;
 	transition: 0.3s ease;
 	float:left;
-	height:84px;
-	width:84px;
+	height:30px !important;
+	width:30px !important;
 	margin:10px;
 }
 
