@@ -35,3 +35,24 @@ body {
 .tile:hover {
 	cursor: pointer;
 }
+
+#btn_solve {
+	font-size:20px;
+	font-family:verdana;
+	width:180px;
+	padding:10px;
+	border: 5px solid black;
+	border-radius:10px;
+	background: #91eabd;
+	transition:0.5s ease;
+}
+
+#btn_solve:active,#btn_solve:hover{
+	background:black;
+	color:#91eabd;
+	cursor:pointer;
+}
+
+#btn_solve:active {
+	transform:scale(0.95);
+}

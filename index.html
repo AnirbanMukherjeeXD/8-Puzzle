@@ -4,14 +4,12 @@
 	<title>8-Puzzle</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="icon" href="icon.png" type="image/png">
-	<script type="text/javascript" src="main.js">
-	</script>
-	<script type="text/javascript" src="a_star.js">
-	</script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="a_star.js"></script>
 </head>
 <body>
 	<center>
-		<div style="height:20vh"></div>
+		<div style="height:15vh"></div>
 		<div id="grid">
 			<div class="tile blank" id="0">
 			</div>
@@ -41,6 +39,8 @@
 			</div>
 			
 		</div>
+		<br><br><br>
+		<div id="btn_solve" onclick="a_star(grid)">Solve using AI</div>
 	</center>
 </body>
 </html>
