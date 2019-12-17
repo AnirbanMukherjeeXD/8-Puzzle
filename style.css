@@ -44,7 +44,7 @@ body {
 	border: 5px solid black;
 	border-radius:10px;
 	background: #91eabd;
-	transition:0.5s ease;
+	transition:0.3s ease;
 }
 
 #btn_solve:active,#btn_solve:hover{

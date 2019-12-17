@@ -7,11 +7,16 @@ function h(grid){
 	for(i=0;i<3;i++){
 		for(j=0;j<3;j++){
 			hi=Math.abs(i-Math.floor(grid[i][j]/3))+Math.abs(j-grid[i][j]%3)
-			sum+=hi
+			console.log('h'+(i*3+j)+'= ',hi);
+			if(grid[i][j]!=0){
+				sum+=hi;
+			}
 		}
 	}
+	return sum;
 }
 
 function a_star(grid){
 	console.log(grid);
+	console.log(h(grid));
 }
