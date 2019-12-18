@@ -23,33 +23,50 @@ function moveT(id){
 
 }
 
-//Movement on pressing keys
-document.onkeydown=function(){
-	switch(event.which){
-
-		//LEFT
-		case(37):if((tiles[0].loc[1]==0)||(tiles[0].loc[1]==1))
+//Move Blank key
+function move(dir){
+	switch(dir){
+		case('l'):if((tiles[0].loc[1]==0)||(tiles[0].loc[1]==1))
 					slide(grid[tiles[0].loc[0]][tiles[0].loc[1]+1],'l');
 				else
 					console.log("Invalid move");
 				break;
 		//UP
-		case(38):if((tiles[0].loc[0]==0)||(tiles[0].loc[0]==1))
+		case('u'):if((tiles[0].loc[0]==0)||(tiles[0].loc[0]==1))
 					slide(grid[tiles[0].loc[0]+1][tiles[0].loc[1]],'u');
 				else
 					console.log("Invalid move");
 				break;
 		//RIGHT
-		case(39):if((tiles[0].loc[1]==1)||(tiles[0].loc[1]==2))
+		case('r'):if((tiles[0].loc[1]==1)||(tiles[0].loc[1]==2))
 					slide(grid[tiles[0].loc[0]][tiles[0].loc[1]-1],'r');
 				else
 					console.log("Invalid move");
 				break;
 		//DOWN
-		case(40):if((tiles[0].loc[0]==1)||(tiles[0].loc[0]==2))
+		case('d'):if((tiles[0].loc[0]==1)||(tiles[0].loc[0]==2))
 					slide(grid[tiles[0].loc[0]-1][tiles[0].loc[1]],'d');
 				else
 					console.log("Invalid move");
+				break;		
+		//default:console.log(event.which);		
+	}
+}
+//Movement on pressing keys
+document.onkeydown=function(){
+	switch(event.which){
+
+		//LEFT
+		case(37):move('l');
+				break;
+		//UP
+		case(38):move('u');
+				break;
+		//RIGHT
+		case(39):move('r');
+				break;
+		//DOWN
+		case(40):move('d');
 				break;		
 		//default:console.log(event.which);
 
