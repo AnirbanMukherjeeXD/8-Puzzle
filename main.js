@@ -80,29 +80,25 @@ function slide(id,dir){
 	switch(dir){
 		case('l'):console.log("left");
 				y.posX-=106;
-				grid[y.loc[0]][y.loc[1]-1]=grid[y.loc[0]][y.loc[1]]
-				grid[y.loc[0]][y.loc[1]]=0
+				grid=gridMove(grid,'l');
 				y.loc[1]-=1
 				z.loc[1]+=1
 				break;
 		case('r'):console.log("right");
 				y.posX+=106;
-				grid[y.loc[0]][y.loc[1]+1]=grid[y.loc[0]][y.loc[1]]
-				grid[y.loc[0]][y.loc[1]]=0
+				grid=gridMove(grid,'r');
 				y.loc[1]+=1
 				z.loc[1]-=1
 				break;
 		case('u'):console.log("up");
 				y.posY-=106;
-				grid[y.loc[0]-1][y.loc[1]]=grid[y.loc[0]][y.loc[1]]
-				grid[y.loc[0]][y.loc[1]]=0
+				grid=gridMove(grid,'u');
 				y.loc[0]-=1
 				z.loc[0]+=1
 				break;
 		case('d'):console.log("down");
 				y.posY+=106;
-				grid[y.loc[0]+1][y.loc[1]]=grid[y.loc[0]][y.loc[1]]
-				grid[y.loc[0]][y.loc[1]]=0
+				grid=gridMove(grid,'d');
 				y.loc[0]+=1
 				z.loc[0]-=1
 				break;
@@ -111,6 +107,59 @@ function slide(id,dir){
 	x.style.transform="translate("+y.posX+"px, "+y.posY+"px)";
 	
 }
+
+//To change values of grid
+//returns new grid values
+function gridMove(grid,dir){
+	
+	//Creating a copy of real grid 
+	var local_grid = grid.map(function(arr) {
+		return arr.slice();
+	});
+
+	switch(dir){
+		case('l'):
+
+				if((tiles[0].loc[1]==0)||(tiles[0].loc[1]==1)){
+					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]][tiles[0].loc[1]+1];
+					local_grid[tiles[0].loc[0]][tiles[0].loc[1]+1]=0
+				}
+				else
+					//console.log("Invalid move");
+					return null;
+				break;
+		//UP
+		case('u'):if((tiles[0].loc[0]==0)||(tiles[0].loc[0]==1)){
+					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]+1][tiles[0].loc[1]];
+					local_grid[tiles[0].loc[0]+1][tiles[0].loc[1]]=0
+				}
+				else
+					//console.log("Invalid move");
+					return null;
+				break;
+		//RIGHT
+		case('r'):if((tiles[0].loc[1]==1)||(tiles[0].loc[1]==2)){
+					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]][tiles[0].loc[1]-1];
+					local_grid[tiles[0].loc[0]][tiles[0].loc[1]-1]=0;
+				}
+				else
+					//console.log("Invalid move");
+					return null;
+				break;
+		//DOWN
+		case('d'):if((tiles[0].loc[0]==1)||(tiles[0].loc[0]==2)){
+					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]-1][tiles[0].loc[1]];
+					local_grid[tiles[0].loc[0]-1][tiles[0].loc[1]]=0;
+				}
+				else
+					//console.log("Invalid move");
+					return null;
+				break;		
+	}
+	return local_grid;
+}
+
+
 function tile(n){
 	this.id=n;
 	this.loc=[Math.floor(n/3),n%3];
