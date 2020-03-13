@@ -110,6 +110,7 @@ function slide(id,dir){
 
 //To change values of grid
 //returns new grid values
+
 function gridMove(grid,dir){
 	
 	//Creating a copy of real grid 
@@ -117,39 +118,53 @@ function gridMove(grid,dir){
 		return arr.slice();
 	});
 
+	//Find 0
+	for(aa=0;aa<3;aa++){
+		for(bb=0;bb<3;bb++){
+			if(local_grid[aa][bb]==0){
+				xi=aa;
+				xj=bb;
+				bb=4;
+				break;
+			}
+		}
+	}
+
+
+
 	switch(dir){
 		case('l'):
 
-				if((tiles[0].loc[1]==0)||(tiles[0].loc[1]==1)){
-					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]][tiles[0].loc[1]+1];
-					local_grid[tiles[0].loc[0]][tiles[0].loc[1]+1]=0
+				if((xj==0)||(xj==1)){
+					local_grid[xi][xj]=local_grid[xi][xj+1];
+					local_grid[xi][xj+1]=0
 				}
 				else
 					//console.log("Invalid move");
 					return null;
 				break;
 		//UP
-		case('u'):if((tiles[0].loc[0]==0)||(tiles[0].loc[0]==1)){
-					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]+1][tiles[0].loc[1]];
-					local_grid[tiles[0].loc[0]+1][tiles[0].loc[1]]=0
+		case('u'):if((xi==0)||(xi==1)){
+					local_grid[xi][xj]=local_grid[xi+1][xj];
+					local_grid[xi+1][xj]=0
 				}
 				else
 					//console.log("Invalid move");
 					return null;
 				break;
 		//RIGHT
-		case('r'):if((tiles[0].loc[1]==1)||(tiles[0].loc[1]==2)){
-					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]][tiles[0].loc[1]-1];
-					local_grid[tiles[0].loc[0]][tiles[0].loc[1]-1]=0;
+		case('r'):if((xj==1)||(xj==2)){
+					local_grid[xi][xj]=local_grid[xi][xj-1];
+					local_grid[xi][xj-1]=0;
 				}
 				else
 					//console.log("Invalid move");
 					return null;
 				break;
 		//DOWN
-		case('d'):if((tiles[0].loc[0]==1)||(tiles[0].loc[0]==2)){
-					local_grid[tiles[0].loc[0]][tiles[0].loc[1]]=local_grid[tiles[0].loc[0]-1][tiles[0].loc[1]];
-					local_grid[tiles[0].loc[0]-1][tiles[0].loc[1]]=0;
+		case('d'):if((xi==1)||(xi==2)){
+					local_grid[xi][xj]=local_grid[xi-1][xj];
+					local_grid[xi-1][xj]=0;
 				}
 				else
 					//console.log("Invalid move");
