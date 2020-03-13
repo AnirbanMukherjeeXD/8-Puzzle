@@ -5,4 +5,5 @@ function solve(grid){
 		//move(moves_dir.shift());
 		setTimeout(function(){ move(moves_dir.shift()) }, 500*i);
 	}
+	moves=[];
 }
