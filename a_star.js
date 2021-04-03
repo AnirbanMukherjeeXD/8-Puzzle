@@ -103,14 +103,7 @@ function h(grid){
 //Backtrack path
 function backtrack_path(){
 	console.log("Backtrack");
-	// console.log(closed_list[0]);
-	// console.log(closed_list[1]);
-	// console.log(closed_list[2]);
-
-	// for(xyz=0;xyz<closed_list.length;xyz++){
-	// 	console.log(closed_list[xyz]);
-	// }
-	// console.log("Done");
+	
 
 	state=closed_list.pop();
 	parent=state_val(state[1]);
