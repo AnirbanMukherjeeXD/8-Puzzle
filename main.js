@@ -9,7 +9,8 @@ r39
 d40
 */
 
-//Movement on clicking tiles
+///// Movement on clicking tiles
+// Only possible move
 function moveT(id){
 	if((tiles[id].loc[0]>0)&&(grid[tiles[id].loc[0]-1][tiles[id].loc[1]]==0))
 		{slide(id,'u');}
@@ -23,7 +24,8 @@ function moveT(id){
 
 }
 
-//Move Blank key
+///// Move Blank key
+// Takes care of all changes
 function move(dir){
 	switch(dir){
 		case('l'):if((tiles[0].loc[1]==0)||(tiles[0].loc[1]==1))
@@ -74,9 +76,9 @@ document.onkeydown=function(){
 }
 
 function slide(id,dir){
-	x=document.getElementById(id);	
-	y=tiles[id];
-	z=tiles[0];
+	x=document.getElementById(id);	// tile on html
+	y=tiles[id];					// tile to be moved
+	z=tiles[0];						// blank tile
 	switch(dir){
 		case('l'):console.log("left");
 				y.posX-=106;
@@ -108,7 +110,7 @@ function slide(id,dir){
 	
 }
 
-//To change values of grid
+///// Changing values of grid 
 //returns new grid values
 
 function gridMove(grid,dir){
@@ -174,6 +176,10 @@ function gridMove(grid,dir){
 	return local_grid;
 }
 
+///// Tile Object
+// id is as per the id in html file
+// loc is an array containing row and column
+// posX and posY are for CSS values after moving
 
 function tile(n){
 	this.id=n;
@@ -182,6 +188,8 @@ function tile(n){
 	this.posY=0;
 
 }
+
+///// Creating array of tiles
 
 tiles=[];
 for(i=0;i<9;i++){		//Tile with id 0 is blank
