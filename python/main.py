@@ -1,11 +1,11 @@
 import numpy as np
 
 class state:
-	def __init__(self,a,b,c,d):
-		self.current=a
-		self.parent=b
-		self.depth=c
-		self.h=d
+	def __init__(self,current,parent,depth,h):
+		self.current=current
+		self.parent=parent
+		self.depth=depth
+		self.h=h
 
 
 # Goal State
