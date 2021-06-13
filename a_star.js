@@ -1,3 +1,8 @@
+// STATE FORMAT:
+// [ grid, f-score, direction, parent ]
+
+max_level=-1;
+
 //Goal state	
 const goal=[[0,1,2],[3,4,5],[6,7,8]]
 goal_reached=0;
@@ -7,9 +12,12 @@ moves=[]
 
 //Processing nodes
 //open_list=new Set()
+
+///// List of unvisited nodes
 open_list=[]
 
-//Compare two grids
+///// Compare two grids
+// Returns true if grids are same
 function compare_grids(grid1,grid2){
 	for(i=0;i<3;i++){
 		if(JSON.stringify(grid1[i])!=JSON.stringify(grid2[i]))
@@ -21,30 +29,27 @@ function compare_grids(grid1,grid2){
 //Check if open list has a state
 function check_open(g){
 	for(open_list_i=0;open_list_i<open_list.length;open_list_i++){
-		//alert(open_list[open_list_i]);
-		//alert(g==open_list[open_list_i]);
 		if(compare_grids(open_list[open_list_i][0],g)){
 			//alert("TRUE!!!",open_list[open_list_i][0]);
-			return false;
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
-//Visited nodes
+///// List of Visited nodes
 closed_list=[]
 
-//Check if element exists in closed list
+///// Check if element exists in closed list
+// Returns true if element exists, else false
 function check_closed(g){
 	if(closed_list.length>0){	
 		for(closed_list_i=0;closed_list_i<closed_list.length;closed_list_i++){
 			if(compare_grids(closed_list[closed_list_i][0],g)){
-				//console.log("Same: ",closed_list[closed_list_i][0],g);
-				return false;
+				return true;
 			}
 		}
-		//alert(99);
-		return true;
+		return false;
 	}
 }
 
@@ -64,9 +69,12 @@ function to_dir(x){
 	}
 }
 
+
+///// Returns value of state in number
+// Initially 012345678
+
 function state_val(grid){
 	val=0;
-	
 	for(state_i=0;state_i<3;state_i++){
 		for(state_j=0;state_j<3;state_j++){
 			val=val*10+grid[state_i][state_j];
@@ -76,11 +84,13 @@ function state_val(grid){
 	return(val);
 }
 
-//Sorting open list in ascending order of f-score
+///// Sorting open list in ascending order of f-score
+
 function priority_sort(list){
 	list = list.sort(function(a,b) {
-    return a[1] - b[1];
-});
+		return a[1] - b[1];
+	});
+	return(list);
 }
 
 
@@ -103,8 +113,6 @@ function h(grid){
 //Backtrack path
 function backtrack_path(){
 	console.log("Backtrack");
-	
-
 	state=closed_list.pop();
 	parent=state_val(state[1]);
 	moves.push(state[2]);
@@ -119,23 +127,18 @@ function backtrack_path(){
 
 //A* function
 function a_star(grid,level,last){
+	if(max_level<level){
+		max_level=level;
+		console.log("MAX LEVEL: ", max_level);
+	}
 	//alert("level "+level);
 	//Creating a copy of real grid 
 	var grid = grid.map(function(arr) {
 		return arr.slice();
 	});
+	// console.log("OPEN: ", open_list);
+	// console.log("CLOSE: ", closed_list);
 
-	//console.log("A star level: ",level);
-
-	//Creating state value
-	//grid_state=state_val(grid);
-
-	//Adding state value to closed list
-	//closed_list.push([grid]);
-
-	// console.log(grid);
-	// console.log("______________________");
-	
 	if(level<-1){
 		console.log("Level constraint");
 		return;
@@ -147,6 +150,7 @@ function a_star(grid,level,last){
 		goal_reached=1;
 		backtrack_path();
 		console.log("Moves: ",moves);
+		console.log("MAX LEVEL: ", max_level);
 		return;
 	}
 
@@ -158,27 +162,27 @@ function a_star(grid,level,last){
 	grid_moved[3]=gridMove(grid,'l')
 
 	//alert(state_val(grid_moved[0]));
+
+	// Check unvisitable neighbors
 	count_null=0;
 	for(ii=0;ii<4;ii++){
 
 		//Check if explored states are in closed list
 
 		//if(grid_moved[i] && closed_list.has(state_val(grid_moved[i]))){
-		if(!grid_moved[ii] || check_closed(grid_moved[ii])==false){
-			//alert("Deleted"+ closed_list);
-			//alert("there"+grid_moved[ii]);
+		if(!grid_moved[ii] || check_closed(grid_moved[ii])){
+			// alert("Deleted"+ closed_list);
+			// alert("there"+grid_moved[ii]);
 
 			grid_moved[ii]=null;
 			count_null++;
 			continue;
 		}else{
-			//alert("not there");
+		
 		}
-		//alert(ii);
-		// console.log(to_dir(ii));
-		// console.log(grid_moved[ii]);
+		
 	}
-	//If all neighbors are visited (dead-end)
+	//If all neighbors are un-visitable (dead-end)
 	if(count_null==4){
 		//moves.pop();
 		//a_star(gridMove(grid,to_dir((last+2)%4)),level+1)
@@ -192,64 +196,27 @@ function a_star(grid,level,last){
 	best_dir='';
 	
 
-	//Calculating the f-score for each explored paths
-	// for(ii=0;ii<4;ii++){
-
-	// 	if(grid_moved[ii]){
-	// 		f_score=h(grid_moved[ii])+level;
-	// 		console.log(f_score);
-	// 		if(f_score<best_f_score){
-	// 			best_f_score=f_score;
-	// 			best_dir=ii;
-	// 		}
-	// 	}
-	// }
-
 	//Adding processing states & f_scores to OPEN LIST
 	for(ii=0;ii<4;ii++){
 		if(grid_moved[ii]){
 			//alert(grid_moved[ii]);
 			f_score=h(grid_moved[ii])+level;	
 			//If open list doesn't have g state
-			if(check_open(grid_moved[ii])){
+			if(!check_open(grid_moved[ii])){
+
+				// Format: [ grid, f-score, direction, parent]
 				open_list.push([grid_moved[ii],f_score,ii,grid]);
 				//alert("Pushed");
 			}
 		}
 	}
-
-	// console.log("Open list:",open_list);
-	// console.log("Closed list:",closed_list);
+	list = priority_sort(open_list);
 	
-	// for(x=0;x<open_list.length;x++){
-	// 	for(y=0;y<open_list.length;y++){
-	// 		if(x!=y){
-	// 			if(compare_grids(open_list[x][0],open_list[y][0]))
-	// 				alert("WRONG! ",x,y);
-	// 		}
-	// 	}
-	// }
-
-	//Sorting open list in ascending order of f-score
-	priority_sort(open_list);
-	//console.log("Open: ",open_list);
-	//alert("OPENING");
 	//Best f-score
 	best_f_score=open_list[0][1];
 
 	//Best direction
 	best_dir=open_list[0][2];
-
-	//console.log("Best ",best_f_score, to_dir(best_dir));
-	//console.log("Best move :"+best_dir)
-	//moves.push(best_dir);
-
-	// console.log(moves,"Next:");
-	// console.log(gridMove(grid,to_dir(best_dir)));
-	
-	//a_star(gridMove(grid,to_dir(best_dir)),level+1,best_dir)
-	// console.log("Open list:");
-	// console.log(open_list);
 
 	//Taking best move out
 	while(goal_reached==0 && open_list.length>0){
