@@ -111,7 +111,7 @@ function slide(id,dir){
 }
 
 ///// Changing values of grid 
-//returns new grid values
+//returns new grid values if move is legal, else null
 
 function gridMove(grid,dir){
 	
