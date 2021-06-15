@@ -2,3 +2,5 @@
 
 # 8-Puzzle
 Solves 8-Puzzle problem using <a href="https://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">A* Algorithm </a><br><br>
+
+<a href="https://anirbanmukherjeexd.github.io/8-Puzzle/" target="_blank">Click here </a> to play<br><br>
